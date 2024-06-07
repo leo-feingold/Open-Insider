@@ -3,7 +3,9 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 
 #main_url = "http://openinsider.com/latest-cluster-buys"
-test_url = "http://openinsider.com/screener?s=&o=&pl=&ph=&ll=&lh=&fd=-1&fdr=05%2F01%2F2024+-+06%2F01%2F2024&td=0&tdr=&fdlyl=&fdlyh=&daysago=&xp=1&vl=&vh=&ocl=&och=&sic1=-1&sicl=100&sich=9999&grp=0&nfl=&nfh=&nil=&nih=&nol=&noh=&v2l=&v2h=&oc2l=&oc2h=&sortcol=0&cnt=100&page=1"
+# this was may 31-30 dates #test_url = "http://openinsider.com/screener?s=&o=&pl=&ph=&ll=&lh=&fd=-1&fdr=05%2F01%2F2024+-+06%2F01%2F2024&td=0&tdr=&fdlyl=&fdlyh=&daysago=&xp=1&vl=&vh=&ocl=&och=&sic1=-1&sicl=100&sich=9999&grp=0&nfl=&nfh=&nil=&nih=&nol=&noh=&v2l=&v2h=&oc2l=&oc2h=&sortcol=0&cnt=100&page=1"
+test_url = "http://openinsider.com/screener?s=&o=&pl=&ph=&ll=&lh=&fd=-1&fdr=05%2F06%2F2024+-+05%2F07%2F2024&td=0&tdr=&fdlyl=&fdlyh=&daysago=&xp=1&vl=&vh=&ocl=&och=&sic1=-1&sicl=100&sich=9999&grp=0&nfl=&nfh=&nil=&nih=&nol=&noh=&v2l=&v2h=&oc2l=&oc2h=&sortcol=0&cnt=100&page=1"
+
 driver = webdriver.Safari()
 driver.get(test_url)
 driver.implicitly_wait(10)
@@ -21,5 +23,5 @@ for row in rows:
 driver.quit()
 
 df = pd.DataFrame(data[1:], columns=data[0])
-df.to_csv("test.csv")
+df.to_csv("testBetter.csv")
 print(df.head())

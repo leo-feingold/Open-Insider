@@ -1,8 +1,7 @@
-import numpy as  np
+import numpy as np
 import pandas as pd
 import yfinance as yf
-from datetime import timedelta, time
-
+from datetime import timedelta, time, datetime
 
 def loadClusterBuys(csv):
     df = pd.read_csv(csv)
@@ -12,31 +11,32 @@ def loadClusterBuys(csv):
     print("Updated Columns in the DataFrame:", df.columns.tolist())
     return df
 
-def findNearestFutureDay(df, target_date):
-    future_dates = df.index[df.index >= target_date]
+def findNearestFutureDay(data, target_date):
+    target_date = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    future_dates = data.index[data.index >= target_date]
     if not future_dates.empty:
         closest_date = future_dates[0]
     else:
-        closest_date = df.index[0]
+        closest_date = data.index[-1]
     return closest_date
 
-
 def performanceOverNext3Days(df):
-    market_open = time(9, 0)
     market_close = time(16, 0)
     result_df = pd.DataFrame(columns=["Ticker", "Filing Date", "Actual Purchase Date", "Purchase Price", "Sell Date", "Sell Price", "Return on Investment (%)"])
+
     for stock, filing_date in zip(df["Ticker"], df["Filing Date"]):
-        if filing_date.time() > market_close:
-            purchase_date = filing_date + timedelta(days=1)
-        else:
-            purchase_date = filing_date
-        
-        data = yf.download(stock, start=filing_date, end=purchase_date + timedelta(days=5))
-        
+        start_date = filing_date - timedelta(days=1)
+        end_date = filing_date + timedelta(days=9)
+        data = yf.download(stock, start=start_date, end=end_date)
+
         if not data.empty:
-            actual_purchase_date = findNearestFutureDay(data, purchase_date)
+            if filing_date.time() > market_close:
+                target_purchase_date = filing_date + timedelta(days=1)
+            else:
+                target_purchase_date = filing_date
+
+            actual_purchase_date = findNearestFutureDay(data, target_purchase_date)
             open_price = data.loc[actual_purchase_date]["Open"]
-            
             sell_date = findNearestFutureDay(data, actual_purchase_date + timedelta(days=3))
             close_price = data.loc[sell_date]["Close"]
             roi = ((close_price - open_price) / open_price) * 100
@@ -58,8 +58,7 @@ def main():
     clusters = loadClusterBuys(csv)
     results = performanceOverNext3Days(clusters)
     print(results)
-    results.to_csv("betterv2.csv")
-
+    results.to_csv("betterv2.csv", index=False)
 
 if __name__ == "__main__":
     main()
