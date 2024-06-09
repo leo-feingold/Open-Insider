@@ -105,12 +105,12 @@ def visualizeData(results_df):
 
 
 def main():
-    csv = "/Users/leofeingold/Desktop/Open Insider/2021ToEnd2022Scrape.csv"
+    csv = "/Users/leofeingold/Desktop/Open Insider/2020Scrape.csv"
     clusters = loadClusterBuys(csv)
     results = performanceOverNext3Days(clusters)
     print(results)
     visualizeData(results)
-    results.to_csv("2021Through2022Results.csv", index=False)
+    results.to_csv("2020Results.csv", index=False)
 
 if __name__ == "__main__":
     main()
