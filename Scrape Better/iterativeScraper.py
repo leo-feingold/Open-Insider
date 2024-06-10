@@ -50,12 +50,12 @@ def concat_and_finish(dfs):
     final_df = pd.concat(dfs, ignore_index=True)
     print(f"Columns: {final_df.columns}")
     print(f"Result: {final_df}")
-    final_df.to_csv("2020Scrape.csv")
+    final_df.to_csv("2008Scrape.csv")
     return final_df
 
 def main():
-    max_date = datetime(2020, 12, 28)
-    min_date = datetime(2020, 1, 1)
+    max_date = datetime(2008, 12, 28)
+    min_date = datetime(2008, 1, 1)
     delta = timedelta(days=10)
 
     dates = iterate_dates(max_date, min_date, delta)

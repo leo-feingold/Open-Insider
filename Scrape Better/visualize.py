@@ -109,8 +109,9 @@ def main():
     clusters = loadClusterBuys(csv)
     results = performanceOverNext3Days(clusters)
     print(results)
-    visualizeData(results)
     results.to_csv("2020Results.csv", index=False)
+    visualizeData(results)
+
 
 if __name__ == "__main__":
     main()
