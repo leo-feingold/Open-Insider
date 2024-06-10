@@ -99,17 +99,17 @@ def visualizeData(results_df):
     total_roi_sum = np.sum(all_rois)
     plt.title(f"ROI Over Time (Total ROI: {total_roi_sum:.3f}%)")
     plt.xlabel("Filing Date")
-    plt.ylabel("ROI)")
+    plt.ylabel("ROI")
     plt.show()
 
 
 
 def main():
-    csv = "/Users/leofeingold/Desktop/Open Insider/2020Scrape.csv"
+    csv = "/Users/leofeingold/Desktop/Open Insider/2018Scrape.csv"
     clusters = loadClusterBuys(csv)
     results = performanceOverNext3Days(clusters)
     print(results)
-    results.to_csv("2020Results.csv", index=False)
+    results.to_csv("2018Results.csv", index=False)
     visualizeData(results)
 
 
