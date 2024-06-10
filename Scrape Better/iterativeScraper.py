@@ -50,7 +50,7 @@ def concat_and_finish(dfs):
     final_df = pd.concat(dfs, ignore_index=True)
     print(f"Columns: {final_df.columns}")
     print(f"Result: {final_df}")
-    final_df.to_csv("2008Scrape.csv")
+    final_df.to_csv("2018Scrape.csv")
     return final_df
 
 def main():
